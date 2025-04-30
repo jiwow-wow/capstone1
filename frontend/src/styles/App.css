@@ -1,0 +1,91 @@
+/* src/App.css */
+
+/* 전체 페이지 기본 스타일 */
+body {
+  font-family: 'Pretendard', sans-serif;
+  background-color: #F1F0E8; /* 베이지 배경 (F1F0E8) */
+  color: #111827; /* 기본 텍스트 색상 (Very Dark Gray) */
+  margin: 0;
+  padding: 0;
+}
+
+/* 제목 */
+ 
+/* 버튼 */
+button {
+  width: 100%;
+  padding: 14px;
+  background-color: #F2D1D1; /* 핑크 (F2D1D1) */
+  color: rgb(95, 92, 92);
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: border;
+}
+
+button:hover {
+  background-color: #F1B3B3; /* 핑크 버튼 호버시 색상 (조금 더 진한 핑크) */
+  color:white
+}
+
+/* 라벨 스타일 */
+label {
+  font-size: 18px;
+  margin-bottom: 8px;
+  display: block;
+  font-weight: bold;  
+  color: #111827; /* 기본 텍스트 색상 */
+}
+
+
+/* 에러 메시지 및 강조 메시지 */
+.error-message {
+  color: #F2D1D1; /* 핑크색 (F2D1D1) */
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.success-message {
+  color: #89A8B2; /* 하늘색 (89A8B2) */
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+
+
+
+/* .App {
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
