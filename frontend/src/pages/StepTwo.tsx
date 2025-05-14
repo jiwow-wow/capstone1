@@ -1,9 +1,10 @@
 // src/pages/Result.tsx
 
 import React, { useEffect, useState } from 'react';
-import './Result.css';
+// import './Result.css';
 import AnalysisResult from '../components/AnalysisResult';
-import ProductRecommendations from '../components/ProductRecommendations';
+import './StepTwo.css'
+
 
 interface AnalysisResult {
   pores: number;
@@ -76,19 +77,9 @@ const Result: React.FC = () => {
   if (!result) return <div>분석 결과를 불러오는 중입니다...</div>;
 
   return (
-        <div className="result-container">
-            
-
-            {/* 분석 결과 박스 */}
-            <div className="analysis-result-box">
-                
-                <AnalysisResult pores={result.pores} elasticity={result.elasticity} moisture={result.moisture} />
-            </div>
-
-            {/* 화장품 추천 박스 */}
-            <div className="product-recommendations-box">
-                <ProductRecommendations products={sampleProducts} />
-            </div>
+        <div  className='StepTwoContainer'>
+            <h2>피부 결과 분석</h2>
+            <AnalysisResult pores={result.pores} elasticity={result.elasticity} moisture={result.moisture} />
         </div>
     );
 };

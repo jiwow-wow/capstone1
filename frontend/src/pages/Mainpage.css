@@ -1,0 +1,12 @@
+
+
+.main-container{
+    flex: 1;
+  display: flex;
+  justify-content: space-between; /* or: center, space-around, space-evenly */
+  /* align-items: center;  */
+ height: 100vh;
+ background-color: rgba(240, 248, 255, 0.856);
+}
+
+

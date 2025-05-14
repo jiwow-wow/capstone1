@@ -30,13 +30,12 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ pores, elasticity, mois
   ];
 
   return (
-    <div>
-        <h2 className="title">피부 분석 결과</h2>
+    <div className='result-box'>
         <div className="legend">
-                        <div className="legend-box low">낮음</div>
-                        <div className="legend-box medium">중간</div>
-                        <div className="legend-box high">높음</div>
-                        </div>
+            <div className="legend-box low">낮음</div>
+            <div className="legend-box medium">중간</div>
+            <div className="legend-box high">높음</div>
+        </div>
         <h3 className="subtitle">모공 수</h3>
         <ResponsiveContainer width="100%" height={200}>
             <BarChart data={[{ name: '모공 수', value: pores, color: '#F4A9A8' }]} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>

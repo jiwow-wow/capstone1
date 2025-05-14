@@ -40,10 +40,10 @@ const ImageUploader: React.FC = () => {
     };
 
     return (
-        <div>
+        <div className='ImageUpload-box'>
         <label htmlFor="file-upload"></label>
         <input id="file-upload" type="file" accept="image/*" onChange={handleFileChange} />
-
+        
         <button type="button" onClick={handleUpload}>
             분석 요청
         </button>
