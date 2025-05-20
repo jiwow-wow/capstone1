@@ -1,4 +1,3 @@
-// src/pages/Main.tsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Mainpage.css';
@@ -11,15 +10,18 @@ const MainPage: React.FC = () => {
   const [gender, setGender] = useState<string | null>(null);
   const [typedText, setTypedText] = useState('');
   const [name, setName] = useState('');
+  const [ageRange, setAgeRange] = useState(''); // 추가
   const [startAnimation, setStartAnimation] = useState(false);
+
   const handleStartAnalysis = () => {
     if (!name.trim()) {
       alert("이름을 입력해주세요.");
       return;
     }
-    setStartAnimation(true); // 이게 핵심!
+    setStartAnimation(true);
   };
-  const fullText = `개인의 피부 이미지를 분석하여, 피부 타입과 고민에 최적화된 화장품을 추천합니다.
+
+const fullText = `개인의 피부 이미지를 분석하여, 피부 타입과 고민에 최적화된 화장품을 추천합니다.
 화장품 기능, 사용자 고민을 통합해 더 정확하고 신뢰도 높은 추천 결과를 제공합니다.
 전문가가 아니어도 누구나 손쉽게 정밀한 피부 진단과 효과적인 스킨케어 제품 선택이 가능합니다.`;
 
@@ -40,11 +42,10 @@ const MainPage: React.FC = () => {
     if (startAnimation) {
       const timer = setTimeout(() => {
         navigate('/stepone');
-      }, 2000);
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [startAnimation, navigate]);
-
 
   const handleConcernChange = (concern: string) => {
     setSkinConcerns((prev) =>
@@ -57,11 +58,14 @@ const MainPage: React.FC = () => {
   };
 
   return (
-      <div className={`main-container ${startAnimation ? 'animate-transition' : ''}`}>
+    <div className={`main-container ${startAnimation ? 'animate-transition' : ''}`}>
+      <div className={`white-box ${startAnimation ? 'animate-transition' : ''}`}>
         <LeftPanel typedText={typedText} />
         <RightPanel
           name={name}
           setName={setName}
+          ageRange={ageRange}          // 추가
+          setAgeRange={setAgeRange}    // 추가
           skinConcerns={skinConcerns}
           handleConcernChange={handleConcernChange}
           gender={gender}
@@ -69,6 +73,7 @@ const MainPage: React.FC = () => {
           handleStartAnalysis={handleStartAnalysis}
         />
       </div>
+    </div>
   );
 };
 

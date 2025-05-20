@@ -17,7 +17,7 @@
 .StepOneContainer {
   width: 30%;
   height: 82vh;
-  margin: 75px 0px 30px 0px; /* 수직 간격 및 가운데 정렬 */
+  margin: 80px 0px 30px 0px; /* 수직 간격 및 가운데 정렬 */
   padding: 30px 20px;
   border: 1px solid #112e7e;; /* 지정된 파란색 테두리 */
   border-radius: 12px;
@@ -44,5 +44,14 @@
     justify-content: center;
     align-items: center;
     flex-direction: column; /* 세로로 배치 */;
-
+  
 }   
+
+/* .imgbox{
+  display: flex;
+  justify-content: center;
+  border: 2px solid #333;
+  width:200px;
+  height: 200px;
+
+} */

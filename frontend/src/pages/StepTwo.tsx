@@ -1,65 +1,18 @@
-// src/pages/Result.tsx
-
 import React, { useEffect, useState } from 'react';
-// import './Result.css';
+import { useNavigate } from 'react-router-dom'; // 추가
 import AnalysisResult from '../components/AnalysisResult';
-import './StepTwo.css'
+import './StepTwo.css';
 
-
-interface AnalysisResult {
+interface AnalysisResultType {
   pores: number;
   elasticity: number;
   moisture: number;
+  pigmentation: number;
 }
-
-interface Product {
-  category: string;
-  brand: string;
-  name: string;
-  tags: string[];
-  volumePrice: string;
-}
-
-const sampleProducts: Product[] = [
-  {
-    category: '수분크림',
-    brand: '라네즈',
-    name: '워터뱅크 블루 히알루로닉 크림',
-    tags: ['#수분공급', '#피부진정', '#저자극'],
-    volumePrice: '50ml / 38,000원',
-  },
-  {
-    category: '에센스',
-    brand: '이니스프리',
-    name: '그린티 씨드 세럼',
-    tags: ['#보습', '#피부탄력', '#저자극'],
-    volumePrice: '80ml / 25,000원',
-  },
-  {
-    category: '토너',
-    brand: '닥터지',
-    name: '레드 블레미쉬 수딩 토너',
-    tags: ['#피부진정', '#수분공급', '#비건뷰티'],
-    volumePrice: '200ml / 20,000원',
-  },
-  {
-    category: '크림',
-    brand: '센텔리안24',
-    name: '마데카 크림',
-    tags: ['#피부재생', '#주름개선', '#저자극'],
-    volumePrice: '50ml / 32,000원',
-  },
-  {
-    category: '앰플',
-    brand: '미샤',
-    name: '타임 레볼루션 나이트 리페어 앰플',
-    tags: ['#탄력강화', '#주름개선', '#수분공급'],
-    volumePrice: '50ml / 36,000원',
-  },
-];
 
 const Result: React.FC = () => {
-  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [result, setResult] = useState<AnalysisResultType | null>(null);
+  const navigate = useNavigate(); // 추가
 
   useEffect(() => {
     const stored = localStorage.getItem('analysisResult');
@@ -70,18 +23,33 @@ const Result: React.FC = () => {
         pores: 472,
         elasticity: 0.5,
         moisture: 0.84,
+        pigmentation: 146,
       });
     }
   }, []);
 
+  const handleNextClick = () => {
+    navigate('/stepthree'); // 이동
+  };
+
   if (!result) return <div>분석 결과를 불러오는 중입니다...</div>;
 
   return (
-        <div  className='StepTwoContainer'>
-            <h2>피부 결과 분석</h2>
-            <AnalysisResult pores={result.pores} elasticity={result.elasticity} moisture={result.moisture} />
-        </div>
-    );
+    <div className="StepTwoContainer">
+      <h2>피부 결과 분석</h2>
+      <AnalysisResult
+        graphData={{
+          '수분': result.moisture,
+          '탄력': result.elasticity,
+          '색소침착 개수': result.pigmentation,
+          '모공 개수': result.pores,
+        }}
+      />
+      <button className="next-button" onClick={handleNextClick}>
+        나에게 맞는 화장품 추천받기
+      </button>
+    </div>
+  );
 };
 
 export default Result;

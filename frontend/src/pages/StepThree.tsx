@@ -8,44 +8,69 @@ const StepThree: React.FC = () => {
 
     useEffect(() => {
     // 예시 데이터
-    const exampleProducts: Product[] = [
-      {
-        category: '스킨/토너',
-        detail: '워터토너',
-        brand: '웰라쥬',
-        name: '리얼 히알루로닉 100 토너',
-        tags: ['#보습', '#수분공급', '#저자극', '#피부진정'],
-        volumePrice: '200ml / 20,000원',
-        rating: 4.59,
-        reviewCount: 977,
-        image: 'https://dn5hzapyfrpio.cloudfront.net/product/4f0/4f099f10-4086-11ee-9736-9b07020e79ca.jpeg',
-        link: 'https://www.glowpick.com/products/167428'
-      },
-      {
-        category: '스킨/토너',
-        detail: '워터토너',
-        brand: '닥터릴리프',
-        name: '디에이씨투 알래스카 엘엠더블유 히알루로닉 토너',
-        tags: ['#미스트토너', '#보습', '#수분공급', '#저자극', '#피부결정돈', '#피부진정', '#피지조절'],
-        volumePrice: '205ml / 39,000원',
-        rating: 4.62,
-        reviewCount: 292,
-        image: 'https://dn5hzapyfrpio.cloudfront.net/product/760/760a86d0-5617-11eb-aec2-430bda4ab232.jpeg',
-        link: 'https://www.glowpick.com/products/142713'
-      },
-      {
-        category: '스킨/토너',
-        detail: '워터토너',
-        brand: '에스트라',
-        name: '에이시카365 수분 진정 결 토너',
-        tags: ['#수분공급', '#약산성', '#저자극', '#피부진정'],
-        volumePrice: '250ml / 30,000원',
-        rating: 4.61,
-        reviewCount: 547,
-        image: 'https://dn5hzapyfrpio.cloudfront.net/product/d4c/d4c68260-8648-11ed-a933-9b1327ab78fd.jpeg',
-        link: 'https://www.glowpick.com/products/161713'
-      }
-    ];
+const exampleProducts: Product[] = [
+  {
+    category: '크림',
+    detail: '',
+    brand: '에스트라',
+    name: '아토베리어365 크림',
+    tags: [],
+    volumePrice: '80ml / 33,000원',
+    rating: 4.65,
+    reviewCount: 0,
+    image: 'https://dn5hzapyfrpio.cloudfront.net/product/4ff/4ffddc50-8812-11ee-b2fa-3b16a1075b95.jpeg',
+    link: ''
+  },
+  {
+    category: '스킨/토너',
+    detail: '',
+    brand: '비플랫',
+    name: '퓨어 토너',
+    tags: [],
+    volumePrice: '210ml / 19,800원',
+    rating: 4.22,
+    reviewCount: 0,
+    image: 'https://dn5hzapyfrpio.cloudfront.net/home/glowmee/upload/20190530/1559198978510.png',
+    link: ''
+  },
+  {
+    category: '패드',
+    detail: '',
+    brand: '어터',
+    name: '스퀘어 팩 패드 모이스처',
+    tags: [],
+    volumePrice: '70ea / 32,000원',
+    rating: 4.65,
+    reviewCount: 0,
+    image: 'https://dn5hzapyfrpio.cloudfront.net/product/f12/f1241d00-d1f2-11ed-9e4b-0b5cf4b72039.jpeg',
+    link: ''
+  },
+  {
+    category: '크림',
+    detail: '',
+    brand: '바이오더마',
+    name: '아토덤 인텐시브 밤',
+    tags: [],
+    volumePrice: '200ml / 33,000원',
+    rating: 4.49,
+    reviewCount: 0,
+    image: 'https://dn5hzapyfrpio.cloudfront.net/product/58f/58f66da0-20e4-11ec-98c2-4d15ad70e488.jpeg',
+    link: ''
+  },
+  {
+    category: '로션',
+    detail: '',
+    brand: '에스트라',
+    name: '아토베리어 365 로션',
+    tags: [],
+    volumePrice: '150ml / 33,000원',
+    rating: 4.43,
+    reviewCount: 0,
+    image: 'https://dn5hzapyfrpio.cloudfront.net/product/7fb/7fb55e40-e042-11ee-87c6-2137a11c980a.jpeg',
+    link: ''
+  }
+];
+
 
     // 예시 데이터로 제품 정보 설정
     setProducts(exampleProducts);

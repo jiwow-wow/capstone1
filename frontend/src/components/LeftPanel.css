@@ -1,15 +1,16 @@
 .left-panel {
-  flex: 1;
+
   color: white;
   background-color: #2962ff;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 0px 20px 20px 0px;
+  border-radius: 20px 70px 70px 20px;
   position: relative;
   overflow: hidden;
   
 }
+
 
 .illustration {
   width: 45%;
