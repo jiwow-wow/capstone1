@@ -1,164 +1,130 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
   Tooltip,
   Legend,
-  LabelList,
-  Cell,
-} from 'recharts';
+} from 'chart.js';
+import annotationPlugin from 'chartjs-plugin-annotation'; // ✅ 추가
+import { Bar } from 'react-chartjs-2';
 
-type AnalysisResultProps = {
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, annotationPlugin); // ✅ 플러그인 등록
+
+interface AnalysisResultProps {
   graphData: {
-    '색소침착 개수': number;
     '수분': number;
     '탄력': number;
+    '색소침착 개수': number;
     '모공 개수': number;
   };
-};
+}
 
-const getColor = (key: string, value: number) => {
-  if (key === '수분' || key === '탄력') {
-    // 수분, 탄력은 낮으면 빨강, 높으면 파랑 (진한 색상 적용)
-    return value < 0 ? '#D81239' : '#00BEE1';
-  } else if (key === '색소침착 개수' || key === '모공 개수') {
-    // 색소침착 개수, 모공 개수는 높으면 빨강, 낮으면 초록 (빨간색 진하게 변경)
-    return value > 0 ? '#D81239' : '#00BEE1';
-  }
-  return '#ccc';
-};
 const AnalysisResult: React.FC<AnalysisResultProps> = ({ graphData }) => {
-  // z-score 범위 가정: -2 ~ 2
-  const domainMin = -2;
+  const labels = ['색소침착 개수', '수분', '탄력', '모공 개수'];
 
-  // 첫번째 그래프 데이터 (수분, 탄력)
-  const firstChartData = [
-    {
-      항목: '수분',
-      음수값: graphData['수분'] < 0 ? graphData['수분'] - domainMin : 0, // 값 - (-2)
-      양수값: graphData['수분'] > 0 ? graphData['수분'] : 0,
-    },
-    {
-      항목: '탄력',
-      음수값: graphData['탄력'] < 0 ? graphData['탄력'] - domainMin : 0,
-      양수값: graphData['탄력'] > 0 ? graphData['탄력'] : 0,
-    },
+  // -2를 0으로 offset 주기 위해 모두 +2
+  const dataValues = [
+    graphData['색소침착 개수'] + 2,
+    graphData['수분'] + 2,
+    graphData['탄력'] + 2,
+    graphData['모공 개수'] + 2,
   ];
 
-  // 두번째 그래프 데이터 (색소침착 개수, 모공 개수)
-  const secondChartData = [
-    { 항목: '색소침착 개수', 값: graphData['색소침착 개수'] },
-    { 항목: '모공 개수', 값: graphData['모공 개수'] },
-  ];
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: 'z-score',
+        data: dataValues,
+        backgroundColor: '#4FC3F7',
+        borderRadius: 5,
+        barPercentage: 0.5,
+        categoryPercentage: 0.5,
+      },
+    ],
+  };
+
+  const options = {
+    indexAxis: 'y' as const,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        min: 0,
+        max: 4,
+        title: {
+          display: true,
+          text: '',
+        },
+        grid: {
+          // drawOnChartArea: false,
+          // drawTicks: false,
+          // drawBorder: false,
+        },
+        ticks: {
+          callback: function (value: number) {
+            return value === 2 ? '' : '';
+          },
+          color: '#FF5E99',
+        },
+      },
+      y: {
+        ticks: {
+          color: '#000',
+          font: {
+            size: 15,
+            weight: 'bold',
+          },
+        },
+        grid: {
+          // drawOnChartArea: false,
+          drawTicks: false,
+          drawBorder: false,
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: true,
+        text: '피부 진단 지표 (z-score)',
+        font: {
+          size: 18,
+        },
+      },
+      annotation: {
+        annotations: {
+          averageLine: {
+            type: 'line',
+            xMin: 2,
+            xMax: 2,
+            borderColor: '#FF5E99',
+            borderWidth: 2,
+            borderDash: [6, 4],
+            label: {
+              content: '선택한 나이대 평균',
+              enabled: true,
+              position: 'start',
+              backgroundColor: 'rgba(255, 94, 153, 0.1)',
+              color: '#FF5E99',
+              font: {
+                size: 14,
+                weight: 'bold',
+              },
+            },
+          },
+        },
+      },
+    },
+  };
 
   return (
-    <div className="result-box">
-      <h3 className="subtitle">피부 항목별 분석 결과 (z-score)</h3>
-
-      {/* 첫번째 그래프: 수분, 탄력 */}
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart
-          layout="vertical"
-          data={firstChartData}
-          margin={{ top: 20, right: 30, left: 40, bottom: 20 }}
-          barGap={10}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" domain={[domainMin, 2]} />
-          <YAxis type="category" dataKey="항목" />
-          <Tooltip />
-          {/* <Legend /> */}
-
-          {/* 음수값 막대 */}
-          <Bar
-            dataKey="음수값"
-            barSize={10}
-            stackId="a"
-            fill="#F28C8C"
-            background={{ fill: '#eee' }}
-            isAnimationActive={false}
-          >
-            {firstChartData.map((entry, index) => (
-              <Cell
-                key={`neg-cell-${index}`}
-                fill={getColor(entry.항목, entry.음수값 - domainMin)}
-              />
-            ))}
-            <LabelList
-              dataKey="음수값"
-              position="insideLeft"
-              formatter={(
-                val: number,
-                _: any,
-                entry?: { value?: number }
-              ) =>
-                entry && entry.value !== undefined && entry.value < 0
-                  ? val.toFixed(2)
-                  : ''
-              }
-            />
-          </Bar>
-
-          {/* 양수값 막대 */}
-          <Bar
-            dataKey="양수값"
-            barSize={10}
-            stackId="a"
-            fill="#A2D5F2"
-            isAnimationActive={false}
-          >
-            {firstChartData.map((entry, index) => (
-              <Cell key={`pos-cell-${index}`} fill={getColor(entry.항목, entry.양수값)} />
-            ))}
-            <LabelList
-              dataKey="양수값"
-              position="insideRight"
-              formatter={(
-                val: number,
-                _: any,
-                entry?: { value?: number }
-              ) =>
-                entry && entry.value !== undefined && entry.value >= 0
-                  ? val.toFixed(2)
-                  : ''
-              }
-            />
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
-
-      <h3 className="subtitle" style={{ marginTop: 40 }}>
-        색소침착 & 모공 개수 분석 결과
-      </h3>
-
-      {/* 두번째 그래프: 색소침착 개수, 모공 개수 */}
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart
-          layout="vertical"
-          data={secondChartData}
-          margin={{ top: 20, right: 30, left: 40, bottom: 20 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" domain={[0, 'dataMax']} />
-          <YAxis type="category" dataKey="항목" />
-          <Tooltip />
-          {/* <Legend /> */}
-          <Bar dataKey="값" barSize={18}>
-            {secondChartData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={getColor(entry.항목, entry.값)} />
-            ))}
-            <LabelList
-              dataKey="값"
-              position="right"
-              formatter={(val: number) => val.toFixed(2)} 
-            />
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+    <div style={{ width: '500px', height: '400px', marginTop: '40px' }}>
+      <Bar data={data} options={options} />
     </div>
   );
 };

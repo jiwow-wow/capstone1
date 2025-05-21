@@ -33,3 +33,9 @@
 
     width: 100%;
 }
+
+
+.gradient-text {
+  color : #ff1e69;
+  font-weight: bold;
+}

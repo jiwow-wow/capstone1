@@ -1,13 +1,13 @@
 // src/components/RightPanel.tsx
 import React from 'react';
 import './RightPanel.css';
-
 import LogoText from "./LogoText"
+
 interface RightPanelProps {
   name: string;
   setName: (name: string) => void;
   ageRange: string;
-  setAgeRange: (ageRange: string) => void; // ← 추가
+  setAgeRange: (ageRange: string) => void;
   skinConcerns: string[];
   handleConcernChange: (concern: string) => void;
   gender: string | null;
@@ -19,13 +19,23 @@ const RightPanel: React.FC<RightPanelProps> = ({
   name,
   setName,
   ageRange,
-  setAgeRange, // ← 추가
+  setAgeRange,
   skinConcerns,
   handleConcernChange,
   gender,
   setGender,
   handleStartAnalysis,
 }) => {
+
+  // 로컬 스토리지에 사용자 정보를 저장하고 분석 시작
+  const handleClick = () => {
+    localStorage.setItem('userName', name);
+    localStorage.setItem('ageRange', ageRange);
+    localStorage.setItem('skinConcerns', JSON.stringify(skinConcerns));
+    localStorage.setItem('gender', gender || '');
+    handleStartAnalysis(); // 실제 분석 함수 호출
+  };
+
   return (
     <div className="right-panel">
       <LogoText />
@@ -54,32 +64,31 @@ const RightPanel: React.FC<RightPanelProps> = ({
         <option value="20대">20대</option>
         <option value="30대">30대</option>
         <option value="40대">40대</option>
-        <option value="50대 이상">50대 이상</option>
+        <option value="50대">50대</option>
+        <option value="60대 이상">60대 이상</option>
       </select>
 
       {/* 피부 고민 */}
       <label className='biglabel'>피부 고민 (최대 3개 선택)</label>
       <div className="checkbox-group">
-        {['트러블', '피부톤', '각질/피부결', '민감성', '자외선 차단', '유기농'].map(
-          (item) => (
-            <label
-              key={item}
-              className={`checkbox-item ${skinConcerns.includes(item) ? 'selected' : ''}`}
-            >
-              <input
-                type="checkbox"
-                value={item}
-                checked={skinConcerns.includes(item)}
-                onChange={() => handleConcernChange(item)}
-                disabled={!skinConcerns.includes(item) && skinConcerns.length >= 3}
-              />
-              {item}
-            </label>
-          )
-        )}
+        {['트러블', '피부톤', '각질/피부결', '민감성', '자외선 차단', '유기농'].map((item) => (
+          <label
+            key={item}
+            className={`checkbox-item ${skinConcerns.includes(item) ? 'selected' : ''}`}
+          >
+            <input
+              type="checkbox"
+              value={item}
+              checked={skinConcerns.includes(item)}
+              onChange={() => handleConcernChange(item)}
+              disabled={!skinConcerns.includes(item) && skinConcerns.length >= 3}
+            />
+            {item}
+          </label>
+        ))}
       </div>
 
-      {/* 성별 */}
+      {/* 성별 선택 */}
       <label className='biglabel'>성별 선택</label>
       <div className="radio-group">
         {['남성', '여성'].map((g) => (
@@ -100,12 +109,11 @@ const RightPanel: React.FC<RightPanelProps> = ({
       </div>
 
       {/* 버튼 */}
-      <button className="signin-btn" onClick={handleStartAnalysis}>
+      <button className="signin-btn" onClick={handleClick}>
         피부분석 시작하기 →
       </button>
     </div>
   );
 };
 
-
-export default RightPanel
+export default RightPanel;
